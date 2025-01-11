@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harun's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background: #fff;
+            padding: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background: #6a11cb;
+            color: white;
+            border-radius: 5px;
+        }
+        section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .intro {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            animation: fadeIn 1.5s;
+        }
+        .intro img {
+            width: 150px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 20px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            animation: fadeInUp 1s;
+        }
+        .gallery-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #6a11cb;
+            color: white;
+            margin-top: 40px;
+        }
+        .contact {
+            text-align: center;
+            padding: 30px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            animation: fadeIn 1.5s;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+   
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Harun Harman</h1>
+    </header>
+    <nav>
+        <a href="#intro">About Me</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <section id="intro" class="intro">
+        <img src="D:\portfolio\images\pfpp.jpg" alt="Harun's Photo">
+        <h2>About Me</h2>
+        <p>Hello! I'm Harun, an enthusiast in sports, travel, and harmonized work with life. I am studying Artificial Intelligence Engineering at Hacettepe University. I have experience in machine learning, deep learning, and data analysis, and I love solving real-world problems with technology.</p>
+
+        <p>I worked on different projects during my internships. At Konumsal Bilgi Sistemleri, I developed an image classification project using TensorFlow and CNN and integrated it into a live website. At MasterSoft, I worked on a cybersecurity project and created a system to detect anomalies in web logs. Now, I am learning more about data engineering at TIGA Healthcare Technologies, focusing on ETL processes and data quality with Microsoft Azure.</p>
+        
+        <p>I enjoy joining competitions and learning new things. For example, I participated in Teknofest AI in Transportation and Iyzico/Coderspace Datathon, where I improved my skills in computer vision and time series analysis.</p>
+        
+        <p>Outside of work, I like staying active and exploring new places. I play volleyball and tennis every week and go to fitness sessions regularly. I also love traveling to different cities and countries to see new cultures. Watching movies is another hobby that helps me relax and find inspiration.</p>
+        
+        <p>I believe in working hard, staying curious, and using AI to make life better for everyone.</p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/harunharman-profile/"><img src="D:\portfolio\images\linkedin.png" alt="linkedin" style="width: 40px; height: 40px;"></a>
+            <a href="https://github.com/HarunHarmann"><img src="D:\portfolio\images\github.png" alt="github" style="width: 40px; height: 40px;"></a>
+            <a href="https://www.instagram.com/harun.hrmn/"><img src="D:\portfolio\images\insta.png" alt="instagram" style="width: 40px; height: 40px;"></a>
+        </div>
+    </section>
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <div class="gallery">
+            <div class="gallery-item"> 
+                <img src="D:\portfolio\images\kayak.jpg" alt="Sport Activity">
+                <p><strong>Date:</strong> March 2024<br><strong>Details:</strong> Snowboard memories from Erciyes, Türkiye.</p>
+            </div>
+            <div class="gallery-item">
+                <img src="D:\portfolio\images\voleybol.jpg" alt="Sport Activity">
+                <p><strong>Date:</strong> 2024 <br><strong>Details:</strong> Volleyball memories from Ankara, Türkiye.</p>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact">
+        <h2>Contact</h2>
+</html>
+
+        <p>Email me at: <a href="mailto:harunharmann@gmail.com">harunharmann@gmail.com</a></p>
+    </section>
+    <footer>
+        <p>&copy; 2025 Harun's Portfolio. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
