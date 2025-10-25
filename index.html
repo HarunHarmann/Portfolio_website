@@ -7,7 +7,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        body {
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 900px;   /* geniş ekranda çok büyümesin */
+            margin: 24px auto 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            background: #000;
+            aspect-ratio: 16 / 9; /* modern tarayıcılar için */
+        }
+
+        .video-caption {
+            text-align: center;
+            font-weight: 700;
+            margin-top: 10px;
+            color: #fff;
+            opacity: 0.95;
+        }
+                body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
@@ -159,6 +178,21 @@
             <a href="https://github.com/HarunHarmann"><img src="images/github.png" alt="github" style="width: 40px; height: 40px;"></a>
             <a href="https://www.instagram.com/harun.hrmn/"><img src="images/insta.png" alt="instagram" style="width: 40px; height: 40px;"></a>
         </div>
+
+        <h3 style="margin-top:24px;">Intro Video</h3>
+
+        <!-- About Me Video -->
+        <div class="video-wrapper animate__animated animate__fadeInUp" aria-label="Intro Video">
+        <iframe
+            src="https://www.youtube-nocookie.com/embed/P16UD1UP1Ok?rel=0&modestbranding=1"
+            title="Harun Harman – Intro Video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+        </div>
     </section>
     <section id="gallery">
         <h2>Gallery</h2>
@@ -175,8 +209,6 @@
     </section>
     <section id="contact" class="contact">
         <h2>Contact</h2>
-</html>
-
         <p>Email me at: <a href="mailto:harunharmann@gmail.com">harunharmann@gmail.com</a></p>
     </section>
     <footer>
