@@ -1,448 +1,294 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Harun's Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harun's Portfolio</title>
 
-  <!-- Premium/modern font stack (Apple/Samsung tarzı) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Orijinal font (korunuyor) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Sadece About Me için premium font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 900px;   /* geniş ekranda çok büyümesin */
+            margin: 24px auto 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            background: #000;
+            aspect-ratio: 16 / 9; /* modern tarayıcılar için */
+        }
+        /* İFRAME'İ TAM ALANA YAY */
+        .video-wrapper iframe {
+          position: absolute;   /* kritik */
+          inset: 0;             /* top/right/bottom/left: 0 kısayolu */
+          width: 100%;
+          height: 100%;
+          border: 0;
+          display: block;
+        }
+        @supports not (aspect-ratio: 16 / 9) {
+        .video-wrapper { height: 0; padding-top: 56.25%; } /* 16:9 */
+        }
+        .video-caption {
+            text-align: center;
+            font-weight: 700;
+            margin-top: 10px;
+            color: #fff;
+            opacity: 0.95;
+        }
+        body {
+            font-family: 'Roboto', sans-serif; /* site genelinde aynı */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background: #fff;
+            padding: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background: #6a11cb;
+            color: white;
+            border-radius: 5px;
+        }
+        section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-  <style>
-    :root{
-      /* Renkler (sakin, premium) */
-      --bg: #f5f5f7;           /* Apple benzeri yumuşak gri */
-      --text: #1d1d1f;         /* Koyu metin */
-      --muted: #6e6e73;        /* İkincil metin */
-      --primary: #6a11cb;      /* Marka gradyanı başlangıç */
-      --primary-2: #2575fc;    /* Marka gradyanı bitiş */
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.08);
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
+        /* ---------- ORİJİNAL INTRO (KORUNUYOR) ---------- */
+        .intro {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            animation: fadeIn 1.5s;
+        }
+        .intro img {
+            width: 150px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 20px;
+        }
 
-      /* Tipografi */
-      --font: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
-              Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
-      --fs-hero: clamp(28px, 4vw, 44px);
-      --fs-title: clamp(22px, 3vw, 32px);
-      --fs-body: clamp(14px, 1.2vw, 16px);
-      --fs-small: 13px;
-      --track-wide: .12em;
-    }
+        /* ---------- PREMIUM ONLY: SADECE ABOUT ME BLOĞUNU YÜKSELT ---------- */
+        .intro.premium {
+            /* Genel zemini beyaz karta çeviriyoruz */
+            background: #ffffff;
+            color: #1d1d1f;
+            border-radius: 16px;
+            padding: 48px 24px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+            border: 1px solid rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
 
-    /* GENEL */
-    html, body { height: 100%; }
-    body{
-      font-family: var(--font);
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
+            /* Tipografi: sadece bu bölüm Inter + sistem yazı tipleri */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                          BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        /* İnce bir premium gradient çerçeve efekti */
+        .intro.premium::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: 18px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(106,17,203,0.28), rgba(37,117,252,0.28));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+            pointer-events: none;
+        }
+        /* Fotoğrafı premium karta uydur */
+        .intro.premium img {
+            border: 4px solid rgba(0,0,0,0.05);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+        }
+        /* Başlık: gradient text */
+        .intro.premium h2 {
+            margin-top: 4px;
+            margin-bottom: 10px;
+            font-weight: 800;
+            font-size: clamp(24px, 3vw, 34px);
+            letter-spacing: -0.02em;
+            background: linear-gradient(90deg, #111, #4a4a4f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Paragraflar: rahat okunur */
+        .intro.premium p {
+            max-width: 70ch;
+            margin: 0 auto 12px;
+            color: #2c2c2e;
+            line-height: 1.8;
+            font-size: clamp(14px, 1.15vw, 16px);
+            font-weight: 500;
+        }
+        /* Sosyal ikonlar: hafif hover */
+        .intro.premium .social-icons a img {
+            transition: transform .2s ease, filter .2s ease;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+        }
+        .intro.premium .social-icons a:hover img {
+            transform: translateY(-2px) scale(1.04);
+        }
+        /* Intro Video başlığı: premium ile kontrast */
+        .intro.premium h3 {
+            color: #1f2937;
+            letter-spacing: .01em;
+        }
 
-    header{
-      background: linear-gradient(90deg, var(--primary), var(--primary-2));
-      color:#fff;
-      padding: 20px 40px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        /* ---------- DİĞER HER ŞEY AYNI KALIR ---------- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            animation: fadeInUp 1s;
+        }
+        .gallery-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #6a11cb;
+            color: white;
+            margin-top: 40px;
+        }
+        .contact {
+            text-align: center;
+            padding: 30px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            animation: fadeIn 1.5s;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+        }
 
-    nav{
-      display:flex; justify-content:center; gap:20px;
-      background:#fff; padding:15px 0;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      position: sticky; top:0; z-index:1000;
-    }
-    nav a{
-      color: var(--primary);
-      text-decoration:none; font-weight:600;
-      padding:10px 20px; border-radius: 999px;
-      transition: transform .2s ease, background .2s ease, color .2s ease;
-      font-size: 14px;
-      letter-spacing: .015em;
-    }
-    nav a:hover{
-      background: linear-gradient(90deg, var(--primary), var(--primary-2));
-      color:#fff; transform: translateY(-1px);
-    }
-
-    section{ padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-
-    /* ======= ABOUT (PREMIUM GÖRÜNÜM) ======= */
-    .about{
-      padding-top: 56px;
-      padding-bottom: 48px;
-    }
-    .about-card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .about-head{
-      padding: 28px 28px 0 28px;
-      background:
-        radial-gradient(1200px 300px at 50% -50%, rgba(106,17,203,0.12), transparent 60%),
-        radial-gradient(900px 250px at 10% -40%, rgba(37,117,252,0.10), transparent 60%),
-        #fff;
-    }
-    .about-eyebrow{
-      font-size: var(--fs-small);
-      letter-spacing: var(--track-wide);
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .about-title{
-      font-size: var(--fs-hero);
-      line-height: 1.15;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin: 10px 0 14px 0;
-      background: linear-gradient(90deg, #111, #3a3a3c);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .about-sub{
-      font-size: clamp(16px, 1.6vw, 18px);
-      color: var(--muted);
-      line-height: 1.6;
-      margin: 0 0 24px 0;
-      max-width: 68ch;
-    }
-
-    .about-grid{
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 28px;
-      padding: 0 28px 28px 28px;
-    }
-    @media (max-width: 900px){
-      .about-grid{ grid-template-columns: 1fr; }
-    }
-
-    .about-media{
-      background: #0b0b0c;
-      border-radius: var(--radius-md);
-      padding: 18px;
-      border: 1px solid #1c1c1f;
-      position: relative;
-      overflow: hidden;
-    }
-    .about-photo{
-      aspect-ratio: 1 / 1;
-      width: 100%;
-      border-radius: 14px;
-      object-fit: cover;
-      display: block;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 20px 40px rgba(0,0,0,.35);
-    }
-    .about-badge{
-      position: absolute;
-      left: 18px; bottom: 18px;
-      background: rgba(255,255,255,0.08);
-      color:#fff;
-      backdrop-filter: saturate(150%) blur(8px);
-      -webkit-backdrop-filter: saturate(150%) blur(8px);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 12px;
-      letter-spacing: .02em;
-    }
-
-    .about-body{
-      display: grid;
-      gap: 16px;
-    }
-    .about-lead{
-      font-size: var(--fs-body);
-      line-height: 1.75;
-      color: #2c2c2e;
-      margin: 0;
-    }
-
-    .about-highlights{
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
-      margin-top: 6px;
-    }
-    @media (max-width: 560px){
-      .about-highlights{ grid-template-columns: 1fr; }
-    }
-    .chip{
-      display: inline-flex; align-items: center; gap: 10px;
-      background: #fafafa;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 14px;
-      line-height: 1.4;
-      color: #1f2937;
-    }
-    .chip svg{ width: 18px; height: 18px; flex: 0 0 18px; }
-
-    .skill-row{
-      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px;
-    }
-    .tag{
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #f3f4f6;
-      border: 1px solid var(--border);
-      font-size: 13px; color: #111827;
-      font-weight: 600;
-      letter-spacing: .01em;
-    }
-
-    .social-actions{
-      display: flex; flex-wrap: wrap; gap: 10px;
-      margin-top: 6px;
-    }
-    .btn{
-      appearance: none; -webkit-appearance: none;
-      border: 0; cursor: pointer;
-      padding: 12px 16px; border-radius: 12px;
-      font-weight: 700; font-size: 14px;
-      letter-spacing: .01em;
-      display: inline-flex; align-items: center; gap: 10px;
-      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-      text-decoration: none;
-    }
-    .btn-primary{
-      color: #fff;
-      background: linear-gradient(90deg, var(--primary), var(--primary-2));
-      box-shadow: 0 10px 20px rgba(37,117,252,.25);
-    }
-    .btn-primary:hover{ transform: translateY(-1px); }
-    .btn-ghost{
-      color: #111827; background: #fff;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 12px rgba(0,0,0,.04);
-    }
-    .btn-ghost:hover{ transform: translateY(-1px); }
-
-    .hr-soft{
-      height: 1px; width: 100%;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 10px 0;
-      border: 0;
-    }
-
-    /* ======= VIDEO ======= */
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      margin: 24px auto 0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-      background: #000;
-      aspect-ratio: 16 / 9;
-    }
-    .video-wrapper iframe{
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      border: 0; display: block;
-    }
-    @supports not (aspect-ratio: 16 / 9) {
-      .video-wrapper { height: 0; padding-top: 56.25%; }
-    }
-    .video-caption{
-      text-align: center; font-weight: 700; margin-top: 10px; color: #fff; opacity: .95;
-    }
-
-    /* ======= GALERİ / DİĞERLERİ (AYNI KALDI) ======= */
-    .gallery{
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px; animation: fadeInUp 1s;
-    }
-    .gallery-item{
-      background: var(--card);
-      padding: 20px; border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform .3s ease, box-shadow .3s ease;
-      border: 1px solid var(--border);
-    }
-    .gallery-item:hover{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,.15); }
-    .gallery-item img{ max-width: 100%; border-radius: 8px; margin-bottom: 15px; }
-
-    .contact{
-      text-align: center; padding: 30px; background: #e9e9ec;
-      border-radius: 10px; animation: fadeIn 1.5s;
-    }
-    footer{
-      text-align: center; padding: 20px;
-      background: linear-gradient(90deg, var(--primary), var(--primary-2));
-      color: #fff; margin-top: 40px;
-    }
-
-    /* Animasyonlar */
-    @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
-    @keyframes fadeInUp{ from{opacity:0; transform: translateY(30px)} to{opacity:1; transform: translateY(0)} }
-  </style>
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Harun Harman</h1>
-  </header>
+    <header>
+        <h1>Harun Harman</h1>
+    </header>
+    <nav>
+        <a href="#intro">About Me</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-  <nav>
-    <a href="#intro">About Me</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <!-- SADECE BU BLOK PREMIUM KUTUYA DÖNÜŞTÜRÜLDÜ -->
+    <section id="intro" class="intro premium">
+        <img src="images/pfpp.jpg" alt="Harun's Photo">
+        <h2>About Me</h2>
+        <p>Hello, I’m Harun — an AI Engineer passionate about building intelligent systems that create real-world impact. I recently graduated from Hacettepe University’s Artificial Intelligence Engineering program, and I enjoy combining curiosity, discipline, and creativity to develop data-driven solutions.</p>
 
-  <!-- ======= ABOUT (YENİ PREMIUM BLOK) ======= -->
-  <section id="intro" class="about">
-    <div class="about-card animate__animated animate__fadeIn">
-      <div class="about-head">
-        <div class="about-eyebrow">ABOUT ME</div>
-        <h2 class="about-title">AI Engineer – gerçek dünyada etki yaratan akıllı sistemler</h2>
-        <p class="about-sub">
-          Hacettepe Üniversitesi Yapay Zekâ Mühendisliği mezunuyum. Merak, disiplin ve yaratıcılığı
-          birleştirerek veriye dayalı çözümler geliştiriyorum. Hedefim; ileri görüşlü bir ekiple birlikte
-          üretmek, büyümek ve fark yaratmak.
-        </p>
-      </div>
-
-      <div class="about-grid">
-        <!-- Sol: Foto -->
-        <div class="about-media">
-          <img class="about-photo" src="images/pfpp.jpg" alt="Harun's Photo">
-          <div class="about-badge">Ankara, Türkiye · Open to Work</div>
+        <p>So far, I’ve gained hands-on experience in <strong>machine learning, computer vision, and data engineering</strong> through two internships and two part-time roles. I contributed to projects such as <strong>UAV visual navigation, multi-sensor pipelines, anomaly detection, data validation, and image classification</strong> at companies including HAVELSAN, TIGA Healthcare, Mastersoft, and Konumsal Information Systems. These experiences taught me how to take responsibility, collaborate effectively, and deliver results as part of a team.</p>
+    
+        <p>Outside of engineering, I enjoy an active and balanced lifestyle — from tennis and volleyball to snowboarding, dancing, music, fitness, and traveling. I believe staying curious and energetic makes me a better engineer and teammate. My goal is to grow in a forward-thinking company where I can contribute, keep improving, and be part of a positive team environment.</p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/harunharman-profile/"><img src="images/linkedin.png" alt="linkedin" style="width: 40px; height: 40px;"></a>
+            <a href="https://github.com/HarunHarmann"><img src="images/github.png" alt="github" style="width: 40px; height: 40px;"></a>
+            <a href="https://www.instagram.com/harun.hrmn/"><img src="images/insta.png" alt="instagram" style="width: 40px; height: 40px;"></a>
         </div>
 
-        <!-- Sağ: Metin ve öğeler -->
-        <div class="about-body">
-          <p class="about-lead">
-            Şimdiye kadar iki staj ve iki part-time rolde <strong>makine öğrenmesi, görüntü işleme</strong> ve
-            <strong>veri mühendisliği</strong> alanlarında çalıştım. <strong>UAV görsel navigasyon, çoklu sensör
-            hatları, anomali tespiti, veri doğrulama ve görüntü sınıflandırma</strong> gibi projelerde görev aldım.
-            HAVELSAN, TIGA Healthcare, Mastersoft ve Konumsal Bilgi Sistemleri’nde edindiğim deneyimler; sorumluluk
-            almayı, ekip içinde verimli çalışmayı ve sonuç odaklı ilerlemeyi öğretti.
-          </p>
+        <h3 style="margin-top:24px;">Intro Video</h3>
 
-          <div class="about-highlights">
-            <div class="chip" title="Proje odakları">
-              <!-- icon -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M12 3l9 4.5-9 4.5L3 7.5 12 3z"/><path d="M21 12l-9 4.5L3 12"/><path d="M21 16.5l-9 4.5-9-4.5"/>
-              </svg>
-              UAV navigasyon & çoklu sensör
-            </div>
-            <div class="chip" title="ML Ops / Data">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/>
-                <rect x="3" y="15" width="7" height="7" rx="1.5"/><rect x="14" y="15" width="7" height="7" rx="1.5"/>
-              </svg>
-              Anomali tespiti & veri doğrulama
-            </div>
-            <div class="chip" title="Computer Vision">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <circle cx="12" cy="12" r="3.5"/><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/>
-              </svg>
-              Görüntü sınıflandırma & CV
-            </div>
-            <div class="chip" title="Takım çalışması">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M16 11a4 4 0 10-8 0 4 4 0 008 0z"/><path d="M6 21v-1a6 6 0 0112 0v1"/>
-              </svg>
-              Ekip içi sorumluluk & teslim
-            </div>
-          </div>
-
-          <hr class="hr-soft"/>
-
-          <div class="skill-row" aria-label="Öne çıkan beceriler">
-            <span class="tag">Python</span>
-            <span class="tag">PyTorch</span>
-            <span class="tag">TensorFlow</span>
-            <span class="tag">OpenCV</span>
-            <span class="tag">Pandas</span>
-            <span class="tag">Airflow</span>
-            <span class="tag">Docker</span>
-            <span class="tag">Git</span>
-          </div>
-
-          <div class="social-actions" role="group" aria-label="Sosyal bağlantılar">
-            <a class="btn btn-primary" href="https://www.linkedin.com/in/harunharman-profile/">
-              <!-- in icon -->
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0zM8 8h4.8v2.2h.1c.7-1.3 2.5-2.7 5.1-2.7 5.4 0 6.4 3.6 6.4 8.3V24h-5v-7.9c0-1.9 0-4.4-2.7-4.4-2.7 0-3.1 2.1-3.1 4.2V24H8z"/>
-              </svg>
-              LinkedIn
-            </a>
-            <a class="btn btn-ghost" href="https://github.com/HarunHarmann">
-              <!-- gh icon -->
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                <path d="M12 .5A12 12 0 000 12.7c0 5.4 3.4 10 8.2 11.6.6.1.8-.2.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.7-1.1 1.9-1.6-2.7-.3-5.5-1.4-5.5-6.2 0-1.4.5-2.5 1.2-3.4-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.4 1.3a11.8 11.8 0 016.2 0c2.4-1.6 3.4-1.3 3.4-1.3.6 1.7.2 3 .1 3.3.8.9 1.2 2 1.2 3.4 0 4.8-2.8 6-5.5 6.2.8.6 1.9 2.2 1.9 4.5v3.4c0 .4.2.8.8.6 4.8-1.6 8.2-6.2 8.2-11.6A12 12 0 0012 .5z"/>
-              </svg>
-              GitHub
-            </a>
-            <a class="btn btn-ghost" href="https://www.instagram.com/harun.hrmn/">
-              <!-- ig icon -->
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 3.8A4.2 4.2 0 1112 18.2 4.2 4.2 0 0112 7.8zm0 2A2.2 2.2 0 1014.2 12 2.2 2.2 0 0012 9.8zM18 6.5a1 1 0 11-1 1 1 1 0 011-1z"/>
-              </svg>
-              Instagram
-            </a>
-          </div>
+        <!-- About Me Video (Aynı video, sadece premium kutu içinde) -->
+        <div class="video-wrapper animate__animated animate__fadeInUp" aria-label="Intro Video">
+        <iframe
+            src="https://www.youtube-nocookie.com/embed/P16UD1UP1Ok?rel=0&modestbranding=1"
+            title="Harun Harman – Intro Video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <!-- Intro Video (aynı) -->
-    <h3 style="margin:24px 0 12px 0; font-size: 18px; color:#1f2937; letter-spacing:.01em;">Intro Video</h3>
-    <div class="video-wrapper animate__animated animate__fadeInUp" aria-label="Intro Video">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/P16UD1UP1Ok?rel=0&modestbranding=1"
-        title="Harun Harman – Intro Video"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="strict-origin-when-cross-origin">
-      </iframe>
-    </div>
-  </section>
-
-  <!-- ======= GALERİ (AYNI) ======= -->
-  <section id="gallery">
-    <h2>Gallery</h2>
-    <div class="gallery">
-      <div class="gallery-item">
-        <img src="images/kayak.jpg" alt="Sport Activity">
-        <p><strong>Date:</strong> March 2024<br><strong>Details:</strong> Snowboard memories from Erciyes, Türkiye.</p>
-      </div>
-      <div class="gallery-item">
-        <img src="images/voleybol.jpg" alt="Sport Activity">
-        <p><strong>Date:</strong> 2024 <br><strong>Details:</strong> Volleyball memories from Ankara, Türkiye.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= CONTACT (AYNI) ======= -->
-  <section id="contact" class="contact">
-    <h2>Contact</h2>
-    <p>Email me at: <a href="mailto:harunharmann@gmail.com">harunharmann@gmail.com</a></p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Harun's Portfolio. All Rights Reserved.</p>
-  </footer>
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <div class="gallery">
+            <div class="gallery-item"> 
+                <img src="images/kayak.jpg" alt="Sport Activity">
+                <p><strong>Date:</strong> March 2024<br><strong>Details:</strong> Snowboard memories from Erciyes, Türkiye.</p>
+            </div>
+            <div class="gallery-item">
+                <img src="images/voleybol.jpg" alt="Sport Activity">
+                <p><strong>Date:</strong> 2024 <br><strong>Details:</strong> Volleyball memories from Ankara, Türkiye.</p>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact">
+        <h2>Contact</h2>
+        <p>Email me at: <a href="mailto:harunharmann@gmail.com">harunharmann@gmail.com</a></p>
+    </section>
+    <footer>
+        <p>&copy; 2025 Harun's Portfolio. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
