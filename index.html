@@ -4,31 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harun's Portfolio</title>
+
+    <!-- Roboto (mevcut) -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Animate.css (mevcut) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
     <style>
+        /* ========== GLOBAL (mevcut stiller) ========== */
         .video-wrapper {
             position: relative;
             width: 100%;
-            max-width: 900px;   /* geniş ekranda çok büyümesin */
+            max-width: 900px;
             margin: 24px auto 0;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             background: #000;
-            aspect-ratio: 16 / 9; /* modern tarayıcılar için */
+            aspect-ratio: 16 / 9;
         }
-        /* İFRAME'İ TAM ALANA YAY */
         .video-wrapper iframe {
-          position: absolute;   /* kritik */
-          inset: 0;             /* top/right/bottom/left: 0 kısayolu */
+          position: absolute;
+          inset: 0;
           width: 100%;
           height: 100%;
           border: 0;
           display: block;
         }
         @supports not (aspect-ratio: 16 / 9) {
-        .video-wrapper { height: 0; padding-top: 56.25%; } /* 16:9 */
+          .video-wrapper { height: 0; padding-top: 56.25%; } /* 16:9 */
         }
         .video-caption {
             text-align: center;
@@ -37,8 +41,9 @@
             color: #fff;
             opacity: 0.95;
         }
-                body {
-            font-family: 'Roboto', sans-serif;
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+                         "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f9;
@@ -78,21 +83,6 @@
             padding: 40px 20px;
             max-width: 1200px;
             margin: 0 auto;
-        }
-        .intro {
-            text-align: center;
-            padding: 50px 20px;
-            background: linear-gradient(to right, #ff9966, #ff5e62);
-            color: white;
-            border-radius: 10px;
-            margin-bottom: 40px;
-            animation: fadeIn 1.5s;
-        }
-        .intro img {
-            width: 150px;
-            border-radius: 50%;
-            border: 4px solid white;
-            margin-bottom: 20px;
         }
         .gallery {
             display: grid;
@@ -140,26 +130,196 @@
             text-decoration: none;
             color: white;
             font-size: 20px;
-   
         }
-
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; } to { opacity: 1; }
         }
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================================
+           PREMIUM ABOUT (sadece bu bölümde geçerli, namespaced)
+           ========================================================= */
+        /* Varsayılanları About bölümüne özel tanımla: */
+        #about{
+          --about-text: #0b0e14;
+          --about-muted: #5a5e67;
+          --about-card: #ffffff;
+          --about-line: #e9edf3;
+          --about-accent: #6aa9ff; /* marka rengi için değiştirilebilir */
+          --about-radius: 14px;
+          --about-space: clamp(16px, 2vw, 24px);
+          --about-space-lg: clamp(24px, 4vw, 48px);
+          --about-maxw: 1080px;
+          --about-shadow: 0 8px 24px rgba(0,0,0,.08);
+          --about-fz-0: clamp(13px, 1.2vw, 14px);
+          --about-fz-1: clamp(15px, 1.35vw, 16px);
+          --about-fz-2: clamp(18px, 1.8vw, 20px);
+          --about-fz-3: clamp(24px, 3.2vw, 32px);
+          --about-fz-4: clamp(30px, 4.2vw, 44px);
+        }
+        #about .about__container{
+          margin: 0 auto;
+          max-width: var(--about-maxw);
+          display: grid;
+          gap: var(--about-space-lg);
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+        @media (min-width: 920px){
+          #about .about__container{
+            grid-template-columns: 380px 1fr;
+            grid-template-areas:
+              "media header"
+              "media body"
+              "media stats"
+              "media skills"
+              "media looking"
+              "media video";
+          }
+          #about .about__media{ grid-area: media; position: sticky; top: 96px; align-self: start; }
+          #about .about__header{ grid-area: header; }
+          #about .about__body{ grid-area: body; }
+          #about .about__stats{ grid-area: stats; }
+          #about .about__skills{ grid-area: skills; }
+          #about .about__looking{ grid-area: looking; }
+          #about .about__video{ grid-area: video; }
+        }
+        #about .about__media{
+          background: var(--about-card);
+          padding: calc(var(--about-space) * 0.75);
+          border-radius: var(--about-radius);
+          border: 1px solid var(--about-line);
+          box-shadow: var(--about-shadow);
+        }
+        #about .about__photo{
+          display: block;
+          width: 100%;
+          height: auto;
+          border-radius: calc(var(--about-radius) - 4px);
+          object-fit: cover;
+          aspect-ratio: 4 / 5;
+          transform: translateZ(0);
+          transition: transform .6s cubic-bezier(.2,.8,.2,1);
+        }
+        #about .about__media:hover .about__photo{ transform: translateY(-2px) scale(1.01); }
+
+        #about .about__title{
+          font-size: var(--about-fz-4);
+          letter-spacing: -.02em;
+          margin: 0 0 calc(var(--about-space) * .5);
+          line-height: 1.08;
+          color: var(--about-text);
+          font-weight: 700;
+        }
+        #about .about__lede{
+          font-size: var(--about-fz-2);
+          color: var(--about-muted);
+          margin: 0;
+        }
+        #about .about__body p{
+          font-size: var(--about-fz-1);
+          line-height: 1.7;
+          color: var(--about-text);
+          margin: 0 0 var(--about-space);
+        }
+        #about .about__body strong{ color: var(--about-text); font-weight: 700; }
+
+        #about .about__stats{
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0,1fr));
+          gap: calc(var(--about-space) * .75);
+          padding: calc(var(--about-space) * .75);
+          border: 1px solid var(--about-line);
+          background: var(--about-card);
+          border-radius: var(--about-radius);
+        }
+        #about .about__stats li{ list-style: none; text-align: center; }
+        #about .stat__num{
+          font-size: var(--about-fz-3);
+          letter-spacing: -.01em;
+          color: var(--about-text);
+        }
+        #about .stat__label{
+          margin-top: 6px;
+          color: var(--about-muted);
+          font-size: var(--about-fz-0);
+        }
+
+        #about .about__sub{
+          font-size: var(--about-fz-2);
+          margin: 0 0 12px;
+          letter-spacing: -.01em;
+          color: var(--about-text);
+          font-weight: 700;
+        }
+        #about .skills{
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0,1fr));
+          gap: 10px;
+          padding: 0;
+          margin: 0;
+        }
+        #about .skills li{
+          list-style: none;
+          font-size: var(--about-fz-0);
+          color: var(--about-text);
+          background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.00));
+          border: 1px solid var(--about-line);
+          padding: 10px 12px;
+          border-radius: 10px;
+          text-align: center;
+        }
+
+        #about .looking{
+          display: grid;
+          gap: 10px;
+          padding: 0;
+          margin: 0;
+        }
+        #about .looking li{
+          list-style: none;
+          font-size: var(--about-fz-1);
+          line-height: 1.6;
+          padding-left: 14px;
+          position: relative;
+          color: var(--about-text);
+        }
+        #about .looking li::before{
+          content: "";
+          position: absolute;
+          left: 0;
+          top: .9em;
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: var(--about-accent);
+        }
+
+        /* Subtle entrance animation */
+        @media (prefers-reduced-motion: no-preference){
+          #about .about__container > *{
+            opacity: 0; transform: translateY(8px);
+            animation: aboutFadeUp .6s ease forwards;
+          }
+          #about .about__container > *:nth-child(2){ animation-delay: .06s; }
+          #about .about__container > *:nth-child(3){ animation-delay: .12s; }
+          #about .about__container > *:nth-child(4){ animation-delay: .18s; }
+          #about .about__container > *:nth-child(5){ animation-delay: .24s; }
+          #about .about__container > *:nth-child(6){ animation-delay: .30s; }
+          #about .about__container > *:nth-child(7){ animation-delay: .36s; }
+        }
+        @keyframes aboutFadeUp{ to{ opacity:1; transform:none; } }
+
+        /* Link stili sadece about içinde */
+        #about a{
+          color: inherit;
+          text-underline-offset: 3px;
+          text-decoration-color: rgba(0,0,0,.25);
+        }
+        #about a:hover{
+          text-decoration-color: var(--about-accent);
         }
     </style>
 </head>
@@ -167,40 +327,124 @@
     <header>
         <h1>Harun Harman</h1>
     </header>
+
+    <!-- NAV: About linki #about'a güncellendi -->
     <nav>
-        <a href="#intro">About Me</a>
+        <a href="#about">About Me</a>
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
     </nav>
-    <section id="intro" class="intro">
-        <img src="images/pfpp.jpg" alt="Harun's Photo">
-        <h2>About Me</h2>
-        <p>Hello, I’m Harun — an AI Engineer passionate about building intelligent systems that create real-world impact. I recently graduated from Hacettepe University’s Artificial Intelligence Engineering program, and I enjoy combining curiosity, discipline, and creativity to develop data-driven solutions.</p>
 
-        <p>So far, I’ve gained hands-on experience in <strong>machine learning, computer vision, and data engineering</strong> through two internships and two part-time roles. I contributed to projects such as <strong>UAV visual navigation, multi-sensor pipelines, anomaly detection, data validation, and image classification</strong> at companies including HAVELSAN, TIGA Healthcare, Mastersoft, and Konumsal Information Systems. These experiences taught me how to take responsibility, collaborate effectively, and deliver results as part of a team.</p>
-    
-        <p>Outside of engineering, I enjoy an active and balanced lifestyle — from tennis and volleyball to snowboarding, dancing, music, fitness, and traveling. I believe staying curious and energetic makes me a better engineer and teammate. My goal is to grow in a forward-thinking company where I can contribute, keep improving, and be part of a positive team environment.</p>
+    <!-- ========== Premium About Section (entegre) ========== -->
+    <section id="about" class="about">
+      <div class="about__container">
+
+        <figure class="about__media">
+          <img src="images/pfpp.jpg" class="about__photo" alt="Harun Harman">
+        </figure>
+
+        <header class="about__header">
+          <h2 class="about__title">About Me</h2>
+          <p class="about__lede">
+            Hello, I’m Harun — an AI Engineer passionate about building intelligent systems that create real-world impact.
+            I recently graduated from Hacettepe University’s Artificial Intelligence Engineering program and I love turning
+            ideas into data-driven products.
+          </p>
+        </header>
+
+        <div class="about__body">
+          <p>
+            I’ve gained hands-on experience in <strong>machine learning, computer vision, and data engineering</strong> through
+            two internships and two part-time roles. I contributed to <strong>UAV visual navigation, multi-sensor pipelines,
+            anomaly detection, data validation, and image classification</strong> at HAVELSAN, TIGA Healthcare, Mastersoft,
+            and Konumsal Information Systems — learning to take ownership, collaborate deeply, and ship results.
+          </p>
+          <p>
+            Outside of engineering, I keep an active, balanced lifestyle — tennis, volleyball, snowboarding, dancing, music,
+            fitness, and traveling. Staying curious and energetic makes me a better engineer and teammate. I’m excited to
+            grow in a forward-thinking company where I can contribute, learn continuously, and build meaningful products.
+          </p>
+        </div>
+
+        <!-- Stats bar -->
+        <ul class="about__stats" role="list">
+          <li>
+            <div class="stat__num">4</div>
+            <div class="stat__label">Companies</div>
+          </li>
+          <li>
+            <div class="stat__num">5+</div>
+            <div class="stat__label">ML/CV Projects</div>
+          </li>
+          <li>
+            <div class="stat__num">2</div>
+            <div class="stat__label">Internships</div>
+          </li>
+          <li>
+            <div class="stat__num">Top-40</div>
+            <div class="stat__label">Datathon</div>
+          </li>
+        </ul>
+
+        <!-- Skills mini-grid -->
+        <section class="about__skills" aria-labelledby="skills-title">
+          <h3 id="skills-title" class="about__sub">Core Skills</h3>
+          <ul class="skills" role="list">
+            <li>Python</li>
+            <li>TensorFlow</li>
+            <li>OpenCV</li>
+            <li>ROS2</li>
+            <li>PySpark</li>
+            <li>SQL/MySQL</li>
+            <li>Transformers</li>
+            <li>Scikit-learn</li>
+            <li>Docker</li>
+          </ul>
+        </section>
+
+        <!-- What I'm looking for -->
+        <section class="about__looking" aria-labelledby="looking-title">
+          <h3 id="looking-title" class="about__sub">What I’m Looking For</h3>
+          <ul class="looking" role="list">
+            <li>Machine Learning / Computer Vision roles with real-world impact</li>
+            <li>Teams that value ownership, code quality, and fast iteration</li>
+            <li>Opportunities to scale models from prototype to production</li>
+          </ul>
+        </section>
+
+        <!-- Social icons (mevcut ikonların taşınmış hali) -->
         <div class="social-icons">
-            <a href="https://www.linkedin.com/in/harunharman-profile/"><img src="images/linkedin.png" alt="linkedin" style="width: 40px; height: 40px;"></a>
-            <a href="https://github.com/HarunHarmann"><img src="images/github.png" alt="github" style="width: 40px; height: 40px;"></a>
-            <a href="https://www.instagram.com/harun.hrmn/"><img src="images/insta.png" alt="instagram" style="width: 40px; height: 40px;"></a>
+          <a href="https://www.linkedin.com/in/harunharman-profile/">
+            <img src="images/linkedin.png" alt="linkedin" style="width: 40px; height: 40px;">
+          </a>
+          <a href="https://github.com/HarunHarmann">
+            <img src="images/github.png" alt="github" style="width: 40px; height: 40px;">
+          </a>
+          <a href="https://www.instagram.com/harun.hrmn/">
+            <img src="images/insta.png" alt="instagram" style="width: 40px; height: 40px;">
+          </a>
         </div>
 
-        <h3 style="margin-top:24px;">Intro Video</h3>
-
-        <!-- About Me Video -->
-        <div class="video-wrapper animate__animated animate__fadeInUp" aria-label="Intro Video">
-        <iframe
-            src="https://www.youtube-nocookie.com/embed/P16UD1UP1Ok?rel=0&modestbranding=1"
-            title="Harun Harman – Intro Video"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
+        <!-- Intro Video (mevcut videonun taşınmış hali) -->
+        <div class="about__video">
+          <h3 style="margin-top:24px; color:#0b0e14;">Intro Video</h3>
+          <div class="video-wrapper animate__animated animate__fadeInUp" aria-label="Intro Video">
+            <iframe
+                src="https://www.youtube-nocookie.com/embed/P16UD1UP1Ok?rel=0&modestbranding=1"
+                title="Harun Harman – Intro Video"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
+          </div>
         </div>
+
+      </div>
     </section>
+    <!-- ========== /Premium About Section ========== -->
+
     <section id="gallery">
         <h2>Gallery</h2>
         <div class="gallery">
@@ -214,16 +458,14 @@
             </div>
         </div>
     </section>
+
     <section id="contact" class="contact">
         <h2>Contact</h2>
         <p>Email me at: <a href="mailto:harunharmann@gmail.com">harunharmann@gmail.com</a></p>
     </section>
+
     <footer>
         <p>&copy; 2025 Harun's Portfolio. All Rights Reserved.</p>
     </footer>
 </body>
 </html>
-
-
-
-
