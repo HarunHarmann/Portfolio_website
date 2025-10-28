@@ -177,7 +177,7 @@
         }
         .gallery-item:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
         }
         .gallery-item img {
             max-width: 100%;
@@ -233,6 +233,33 @@
         .project-bullets li {
             line-height: 1.6;
             margin-bottom: 6px;
+        }
+
+        /* ---- Project Links (butonlar) ---- */
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: transform .15s ease, background-color .15s ease, box-shadow .15s ease;
+        }
+        .project-links a:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.06);
         }
 
         footer {
@@ -403,6 +430,12 @@
                     We obtained accuracy values between 85% and 95% for the crop disease detection models.
                   </li>
                 </ul>
+                <!-- Proje linkleri -->
+                <div class="project-links">
+                    <a href="https://farmly.example.com" target="_blank" rel="noopener">🌐 Website</a>
+                    <a href="docs/farmly_presentation.pdf" target="_blank" rel="noopener">📄 PDF</a>
+                    <a href="docs/farmly_presentation.pptx" target="_blank" rel="noopener">📑 PPTX</a>
+                </div>
             </article>
 
             <!-- Proje 2 (sağ üst) -->
@@ -425,6 +458,10 @@
                     </ul>
                     </li>
                 </ul>
+                <div class="project-links">
+                    <a href="docs/teknofest_ai_transportation.pdf" target="_blank" rel="noopener">📄 PDF</a>
+                    <a href="docs/teknofest_ai_transportation.pptx" target="_blank" rel="noopener">📑 PPTX</a>
+                </div>
             </article>
 
             <!-- Proje 3 (sol alt) -->
@@ -444,6 +481,10 @@
                     <li>• Ölçülebilir kazanım (örn: latency ↓ %35, maliyet ↓ %20).</li>
                     <li>• Demo / repo / canlı link (varsa).</li>
                 </ul>
+                <div class="project-links">
+                    <a href="docs/endangered_species_detection.pdf" target="_blank" rel="noopener">📄 PDF</a>
+                    <a href="docs/endangered_species_detection.pptx" target="_blank" rel="noopener">📑 PPTX</a>
+                </div>
             </article>
 
             <!-- Proje 4 (sağ alt) -->
@@ -459,6 +500,10 @@
                     <li>• Performans / metrikler.</li>
                     <li>• Sorumlulukların.</li>
                 </ul>
+                <div class="project-links">
+                    <a href="docs/project4.pdf" target="_blank" rel="noopener">📄 PDF</a>
+                    <a href="docs/project4.pptx" target="_blank" rel="noopener">📑 PPTX</a>
+                </div>
             </article>
 
         </div>
@@ -567,7 +612,6 @@
 
         // Dışa tıklayınca kapat
         lb.addEventListener('click', (e) => {
-            // görsel veya tuşların dışına tıklanırsa kapat
             const clickOnBackdrop = !e.target.closest('.lightbox__img, .lightbox__prev, .lightbox__next, .lightbox__close');
             if (clickOnBackdrop) closeLightbox();
         });
