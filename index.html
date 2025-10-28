@@ -15,25 +15,24 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            max-width: 900px;   /* geniş ekranda çok büyümesin */
+            max-width: 900px;
             margin: 24px auto 0;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             background: #000;
-            aspect-ratio: 16 / 9; /* modern tarayıcılar için */
+            aspect-ratio: 16 / 9;
         }
-        /* İFRAME'İ TAM ALANA YAY */
         .video-wrapper iframe {
-          position: absolute;   /* kritik */
-          inset: 0;             /* top/right/bottom/left: 0 kısayolu */
+          position: absolute;
+          inset: 0;
           width: 100%;
           height: 100%;
           border: 0;
           display: block;
         }
         @supports not (aspect-ratio: 16 / 9) {
-        .video-wrapper { height: 0; padding-top: 56.25%; } /* 16:9 */
+        .video-wrapper { height: 0; padding-top: 56.25%; }
         }
         .video-caption {
             text-align: center;
@@ -43,7 +42,7 @@
             opacity: 0.95;
         }
         body {
-            font-family: 'Roboto', sans-serif; /* site genelinde aynı */
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f9;
@@ -104,7 +103,6 @@
 
         /* ---------- PREMIUM ONLY: SADECE ABOUT ME BLOĞUNU YÜKSELT ---------- */
         .intro.premium {
-            /* Genel zemini beyaz karta çeviriyoruz */
             background: #ffffff;
             color: #1d1d1f;
             border-radius: 16px;
@@ -113,12 +111,9 @@
             border: 1px solid rgba(0,0,0,0.06);
             position: relative;
             overflow: hidden;
-
-            /* Tipografi: sadece bu bölüm Inter + sistem yazı tipleri */
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text",
                           BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
-        /* İnce bir premium gradient çerçeve efekti */
         .intro.premium::before {
             content: "";
             position: absolute;
@@ -131,12 +126,10 @@
                     mask-composite: exclude;
             pointer-events: none;
         }
-        /* Fotoğrafı premium karta uydur */
         .intro.premium img {
             border: 4px solid rgba(0,0,0,0.05);
             box-shadow: 0 12px 28px rgba(0,0,0,0.18);
         }
-        /* Başlık: gradient text */
         .intro.premium h2 {
             margin-top: 4px;
             margin-bottom: 10px;
@@ -148,7 +141,6 @@
             background-clip: text;
             color: transparent;
         }
-        /* Paragraflar: rahat okunur */
         .intro.premium p {
             max-width: 70ch;
             margin: 0 auto 12px;
@@ -157,7 +149,6 @@
             font-size: clamp(14px, 1.15vw, 16px);
             font-weight: 500;
         }
-        /* Sosyal ikonlar: hafif hover */
         .intro.premium .social-icons a img {
             transition: transform .2s ease, filter .2s ease;
             filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
@@ -165,13 +156,12 @@
         .intro.premium .social-icons a:hover img {
             transform: translateY(-2px) scale(1.04);
         }
-        /* Intro Video başlığı: premium ile kontrast */
         .intro.premium h3 {
             color: #1f2937;
             letter-spacing: .01em;
         }
 
-        /* ---------- DİĞER HER ŞEY AYNI KALIR ---------- */
+        /* ---------- GALLERY (ORİJİNAL) ---------- */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -194,6 +184,53 @@
             border-radius: 8px;
             margin-bottom: 15px;
         }
+
+        /* ---------- YENİ: PROJECTS ---------- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .project-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+        .project-title {
+            font-weight: 800;
+            font-size: clamp(18px, 2.2vw, 22px);
+            color: #111827; /* koyu başlık */
+            margin: 6px 0 12px 0;
+        }
+        .project-images {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .project-images img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #eee;
+        }
+        .project-bullets {
+            margin: 0;
+            padding-left: 18px; /* maddeleme girintisi */
+        }
+        .project-bullets li {
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -235,6 +272,7 @@
     </header>
     <nav>
         <a href="#intro">About Me</a>
+        <a href="#projects">Projects</a>
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
     </nav>
@@ -256,7 +294,6 @@
 
         <h3 style="margin-top:24px;">Intro Video</h3>
 
-        <!-- About Me Video (Aynı video, sadece premium kutu içinde) -->
         <div class="video-wrapper animate__animated animate__fadeInUp" aria-label="Intro Video">
         <iframe
             src="https://www.youtube-nocookie.com/embed/P16UD1UP1Ok?rel=0&modestbranding=1"
@@ -267,6 +304,75 @@
             loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin">
         </iframe>
+        </div>
+    </section>
+
+    <!-- YENİ: PROJECTS BÖLÜMÜ -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid animate__animated animate__fadeInUp">
+
+            <!-- Proje 1 -->
+            <article class="project-card">
+                <!-- İki görsel koy: /images/projects/proje1-a.jpg ve proje1-b.jpg gibi -->
+                <div class="project-images">
+                    <img src="images/projects/proje1-a.jpg" alt="Project 1 image A (placeholder)">
+                    <img src="images/projects/proje1-b.jpg" alt="Project 1 image B (placeholder)">
+                </div>
+                <h3 class="project-title">Proje Adı 1</h3>
+                <ul class="project-bullets">
+                    <li>• Kısa özet / problem tanımı.</li>
+                    <li>• Kullanılan yöntemler / tech stack (örn: PyTorch, OpenCV, Airflow).</li>
+                    <li>• Başarı metriği / çıktı (örn: %92 doğruluk, 3x hızlanma).</li>
+                    <li>• Rolün ve katkın (örn: veri pipeline’ı, model eğitimi, MLOps).</li>
+                </ul>
+            </article>
+
+            <!-- Proje 2 -->
+            <article class="project-card">
+                <div class="project-images">
+                    <img src="images/projects/proje2-a.jpg" alt="Project 2 image A (placeholder)">
+                    <img src="images/projects/proje2-b.jpg" alt="Project 2 image B (placeholder)">
+                </div>
+                <h3 class="project-title">Proje Adı 2</h3>
+                <ul class="project-bullets">
+                    <li>• Kısa özet / problem tanımı.</li>
+                    <li>• Veri boyutu / kaynak (örn: UAV kamera feed, EHR, sensör verileri).</li>
+                    <li>• Mimariler (örn: ResNet50, YOLOv8, LSTM, XGBoost).</li>
+                    <li>• Sonuç ve etkisi (örn: gerçek zamanlı tespit, anomali azaltma).</li>
+                </ul>
+            </article>
+
+            <!-- Proje 3 -->
+            <article class="project-card">
+                <div class="project-images">
+                    <img src="images/projects/proje3-a.jpg" alt="Project 3 image A (placeholder)">
+                    <img src="images/projects/proje3-b.jpg" alt="Project 3 image B (placeholder)">
+                </div>
+                <h3 class="project-title">Proje Adı 3</h3>
+                <ul class="project-bullets">
+                    <li>• Problem ve iş hedefi.</li>
+                    <li>• Mühendislik detayları (örn: feature store, data validation, CI/CD).</li>
+                    <li>• Ölçülebilir kazanım (örn: latency ↓ %35, maliyet ↓ %20).</li>
+                    <li>• Demo / repo / canlı link (varsa).</li>
+                </ul>
+            </article>
+
+            <!-- Proje 4 -->
+            <article class="project-card">
+                <div class="project-images">
+                    <img src="images/projects/proje4-a.jpg" alt="Project 4 image A (placeholder)">
+                    <img src="images/projects/proje4-b.jpg" alt="Project 4 image B (placeholder)">
+                </div>
+                <h3 class="project-title">Proje Adı 4</h3>
+                <ul class="project-bullets">
+                    <li>• Kısa özet.</li>
+                    <li>• Kullanılan teknolojiler.</li>
+                    <li>• Performans / metrikler.</li>
+                    <li>• Sorumlulukların.</li>
+                </ul>
+            </article>
+
         </div>
     </section>
 
@@ -283,10 +389,12 @@
             </div>
         </div>
     </section>
+
     <section id="contact" class="contact">
         <h2>Contact</h2>
         <p>Email me at: <a href="mailto:harunharmann@gmail.com">harunharmann@gmail.com</a></p>
     </section>
+
     <footer>
         <p>&copy; 2025 Harun's Portfolio. All Rights Reserved.</p>
     </footer>
