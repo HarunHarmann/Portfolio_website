@@ -32,7 +32,7 @@
           display: block;
         }
         @supports not (aspect-ratio: 16 / 9) {
-        .video-wrapper { height: 0; padding-top: 56.25%; }
+          .video-wrapper { height: 0; padding-top: 56.25%; }
         }
         .video-caption {
             text-align: center;
@@ -101,7 +101,7 @@
             margin-bottom: 20px;
         }
 
-        /* ---------- PREMIUM ONLY: SADECE ABOUT ME BLOĞUNU YÜKSELT ---------- */
+        /* ---------- PREMIUM ONLY: SADECE ABOUT ME BLOĞU ---------- */
         .intro.premium {
             background: #ffffff;
             color: #1d1d1f;
@@ -185,11 +185,14 @@
             margin-bottom: 15px;
         }
 
-        /* ---------- YENİ: PROJECTS ---------- */
+        /* ---------- YENİ: PROJECTS (2 SOLDA / 2 SAĞDA) ---------- */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr; /* tam 2 sütun */
+            gap: 24px;
+        }
+        @media (max-width: 768px) {
+            .projects-grid { grid-template-columns: 1fr; } /* mobilde tek sütun */
         }
         .project-card {
             background: #ffffff;
@@ -211,7 +214,7 @@
         }
         .project-images {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-bottom: 12px;
         }
@@ -307,14 +310,13 @@
         </div>
     </section>
 
-    <!-- YENİ: PROJECTS BÖLÜMÜ -->
+    <!-- YENİ: PROJECTS (2x2) -->
     <section id="projects">
         <h2>Projects</h2>
         <div class="projects-grid animate__animated animate__fadeInUp">
 
-            <!-- Proje 1 -->
+            <!-- Proje 1 (sol üst) -->
             <article class="project-card">
-                <!-- İki görsel koy: /images/projects/proje1-a.jpg ve proje1-b.jpg gibi -->
                 <div class="project-images">
                     <img src="images/projects/proje1-a.jpg" alt="Project 1 image A (placeholder)">
                     <img src="images/projects/proje1-b.jpg" alt="Project 1 image B (placeholder)">
@@ -324,11 +326,11 @@
                     <li>• Kısa özet / problem tanımı.</li>
                     <li>• Kullanılan yöntemler / tech stack (örn: PyTorch, OpenCV, Airflow).</li>
                     <li>• Başarı metriği / çıktı (örn: %92 doğruluk, 3x hızlanma).</li>
-                    <li>• Rolün ve katkın (örn: veri pipeline’ı, model eğitimi, MLOps).</li>
+                    <li>• Rolün ve katkın.</li>
                 </ul>
             </article>
 
-            <!-- Proje 2 -->
+            <!-- Proje 2 (sağ üst) -->
             <article class="project-card">
                 <div class="project-images">
                     <img src="images/projects/proje2-a.jpg" alt="Project 2 image A (placeholder)">
@@ -337,13 +339,13 @@
                 <h3 class="project-title">Proje Adı 2</h3>
                 <ul class="project-bullets">
                     <li>• Kısa özet / problem tanımı.</li>
-                    <li>• Veri boyutu / kaynak (örn: UAV kamera feed, EHR, sensör verileri).</li>
+                    <li>• Veri boyutu / kaynak (örn: UAV feed, EHR, sensör verileri).</li>
                     <li>• Mimariler (örn: ResNet50, YOLOv8, LSTM, XGBoost).</li>
-                    <li>• Sonuç ve etkisi (örn: gerçek zamanlı tespit, anomali azaltma).</li>
+                    <li>• Sonuç ve etkisi.</li>
                 </ul>
             </article>
 
-            <!-- Proje 3 -->
+            <!-- Proje 3 (sol alt) -->
             <article class="project-card">
                 <div class="project-images">
                     <img src="images/projects/proje3-a.jpg" alt="Project 3 image A (placeholder)">
@@ -358,7 +360,7 @@
                 </ul>
             </article>
 
-            <!-- Proje 4 -->
+            <!-- Proje 4 (sağ alt) -->
             <article class="project-card">
                 <div class="project-images">
                     <img src="images/projects/proje4-a.jpg" alt="Project 4 image A (placeholder)">
