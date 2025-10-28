@@ -224,6 +224,7 @@
             object-fit: cover;
             border-radius: 8px;
             background: #eee;
+            cursor: zoom-in; /* tıklanabilir görsel ipucu */
         }
         .project-bullets {
             margin: 0;
@@ -266,6 +267,66 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- LIGHTBOX (büyük görüntüleme) ---------- */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox__img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .lightbox__close,
+        .lightbox__prev,
+        .lightbox__next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            user-select: none;
+            backdrop-filter: blur(6px);
+        }
+        .lightbox__prev { left: 24px; }
+        .lightbox__next { right: 24px; }
+        .lightbox__close {
+            top: 24px;
+            right: 24px;
+            transform: none;
+            width: 40px;
+            height: 40px;
+        }
+        .lightbox__caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #f8fafc;
+            font-size: 14px;
+            opacity: 0.9;
+            text-align: center;
+            max-width: 90vw;
+        }
+        @media (max-width: 768px) {
+            .lightbox__prev, .lightbox__next { top: auto; bottom: 24px; transform: none; }
         }
     </style>
 </head>
@@ -318,8 +379,9 @@
             <!-- Proje 1 (sol üst) -->
             <article class="project-card">
                 <div class="project-images">
-                    <img src="images/poster.png" alt="Project 1 image A (placeholder)">
-                    <img src="images/crop.png" alt="Project 1 image B (placeholder)">
+                    <!-- Daha yüksek çözünürlük varsa data-full ile ver -->
+                    <img src="images/poster.png" data-full="images/poster.png" alt="Farmly Poster">
+                    <img src="images/crop.png" data-full="images/crop.png" alt="Farmly Crop Model">
                 </div>
                 <h3 class="project-title">FARMLY: AI Powered Agriculture and Livestock Management Mobile App</h3>
                 <ul class="project-bullets">
@@ -340,15 +402,14 @@
                   <li>
                     We obtained accuracy values between 85% and 95% for the crop disease detection models.
                   </li>
-
                 </ul>
             </article>
 
             <!-- Proje 2 (sağ üst) -->
             <article class="project-card">
                 <div class="project-images">
-                    <img src="images/projects/proje2-a.jpg" alt="Project 2 image A (placeholder)">
-                    <img src="images/projects/proje2-b.jpg" alt="Project 2 image B (placeholder)">
+                    <img src="images/projects/proje2-a.jpg" data-full="images/projects/proje2-a.jpg" alt="Teknofest Frame A">
+                    <img src="images/projects/proje2-b.jpg" data-full="images/projects/proje2-b.jpg" alt="Teknofest Frame B">
                 </div>
                 <h3 class="project-title">Teknofest: AI in Transportation</h3>
                 <ul class="project-bullets">
@@ -369,12 +430,16 @@
             <!-- Proje 3 (sol alt) -->
             <article class="project-card">
                 <div class="project-images">
-                    <img src="images/projects/proje3-a.jpg" alt="Project 3 image A (placeholder)">
-                    <img src="images/projects/proje3-b.jpg" alt="Project 3 image B (placeholder)">
+                    <img src="images/projects/proje3-a.jpg" data-full="images/projects/proje3-a.jpg" alt="Project 3 Image A">
+                    <img src="images/projects/proje3-b.jpg" data-full="images/projects/proje3-b.jpg" alt="Project 3 Image B">
                 </div>
-                <h3 class="project-title">Proje Adı 3</h3>
+                <h3 class="project-title">Detecting Endangered Species from Camera Trap Photos</h3>
                 <ul class="project-bullets">
-                    <li>• Problem ve iş hedefi.</li>
+                    <li>• Recognizing the vital role that these species play
+                        in maintaining the natural balance, the looming threat of
+                        extinction poses significant challenges for the future. Seeking solutions to address this issue, our study focuses on
+                        developing models capable of detecting both near to extinct
+                        and endangered species.</li>
                     <li>• Mühendislik detayları (örn: feature store, data validation, CI/CD).</li>
                     <li>• Ölçülebilir kazanım (örn: latency ↓ %35, maliyet ↓ %20).</li>
                     <li>• Demo / repo / canlı link (varsa).</li>
@@ -384,8 +449,8 @@
             <!-- Proje 4 (sağ alt) -->
             <article class="project-card">
                 <div class="project-images">
-                    <img src="images/projects/proje4-a.jpg" alt="Project 4 image A (placeholder)">
-                    <img src="images/projects/proje4-b.jpg" alt="Project 4 image B (placeholder)">
+                    <img src="images/projects/proje4-a.jpg" data-full="images/projects/proje4-a.jpg" alt="Project 4 Image A">
+                    <img src="images/projects/proje4-b.jpg" data-full="images/projects/proje4-b.jpg" alt="Project 4 Image B">
                 </div>
                 <h3 class="project-title">Proje Adı 4</h3>
                 <ul class="project-bullets">
@@ -421,8 +486,110 @@
     <footer>
         <p>&copy; 2025 Harun's Portfolio. All Rights Reserved.</p>
     </footer>
+
+    <!-- LIGHTBOX KATMANI -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Büyük görsel görüntüleme">
+        <button class="lightbox__close" id="lbClose" aria-label="Kapat">✕</button>
+        <button class="lightbox__prev" id="lbPrev" aria-label="Önceki">‹</button>
+        <img class="lightbox__img" id="lbImg" alt="">
+        <button class="lightbox__next" id="lbNext" aria-label="Sonraki">›</button>
+        <div class="lightbox__caption" id="lbCaption"></div>
+    </div>
+
+    <script>
+    (function() {
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lbImg');
+        const lbCaption = document.getElementById('lbCaption');
+        const btnPrev = document.getElementById('lbPrev');
+        const btnNext = document.getElementById('lbNext');
+        const btnClose = document.getElementById('lbClose');
+
+        let currentGroup = [];
+        let currentIndex = 0;
+
+        // Scroll kilitleme
+        const lockScroll = (lock) => {
+            document.documentElement.style.overflow = lock ? 'hidden' : '';
+            document.body.style.overflow = lock ? 'hidden' : '';
+        };
+
+        function openLightbox(group, index) {
+            currentGroup = group;
+            currentIndex = index;
+            render();
+            lb.classList.add('open');
+            lb.setAttribute('aria-hidden', 'false');
+            lockScroll(true);
+        }
+
+        function closeLightbox() {
+            lb.classList.remove('open');
+            lb.setAttribute('aria-hidden', 'true');
+            lbImg.src = '';
+            lockScroll(false);
+        }
+
+        function render() {
+            const item = currentGroup[currentIndex];
+            if (!item) return;
+            lbImg.src = item.full || item.src;
+            lbImg.alt = item.alt || '';
+            lbCaption.textContent = item.alt || '';
+            // Buton görünürlüğü (2 görselse yine gösteriyoruz)
+            btnPrev.style.display = currentGroup.length > 1 ? 'grid' : 'none';
+            btnNext.style.display = currentGroup.length > 1 ? 'grid' : 'none';
+        }
+
+        function show(delta) {
+            if (currentGroup.length < 2) return;
+            currentIndex = (currentIndex + delta + currentGroup.length) % currentGroup.length;
+            render();
+        }
+
+        // Thumbnail'lara tıklama
+        document.querySelectorAll('.project-card').forEach((card) => {
+            const imgs = Array.from(card.querySelectorAll('.project-images img'));
+            const group = imgs.map(img => ({
+                src: img.getAttribute('src'),
+                full: img.getAttribute('data-full'),
+                alt: img.getAttribute('alt')
+            }));
+            imgs.forEach((img, idx) => {
+                img.addEventListener('click', () => openLightbox(group, idx));
+            });
+        });
+
+        // Butonlar
+        btnPrev.addEventListener('click', () => show(-1));
+        btnNext.addEventListener('click', () => show(1));
+        btnClose.addEventListener('click', closeLightbox);
+
+        // Dışa tıklayınca kapat
+        lb.addEventListener('click', (e) => {
+            // görsel veya tuşların dışına tıklanırsa kapat
+            const clickOnBackdrop = !e.target.closest('.lightbox__img, .lightbox__prev, .lightbox__next, .lightbox__close');
+            if (clickOnBackdrop) closeLightbox();
+        });
+
+        // Klavye kısayolları
+        window.addEventListener('keydown', (e) => {
+            if (!lb.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') show(-1);
+            if (e.key === 'ArrowRight') show(1);
+        }, { passive: true });
+
+        // Basit touch swipe (mobil)
+        let startX = null;
+        lb.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+        lb.addEventListener('touchend', (e) => {
+            if (startX === null) return;
+            const dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) { show(dx > 0 ? -1 : 1); }
+            startX = null;
+        }, { passive: true });
+    })();
+    </script>
 </body>
 </html>
-
-
-
