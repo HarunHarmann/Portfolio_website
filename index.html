@@ -10,8 +10,15 @@
     <!-- Sadece About Me için premium font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Animate.css (zaten yüklü, korunuyor) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
     <style>
+        /* ---------- GENEL ---------- */
+        :root{
+          --grad-1:#6a11cb;
+          --grad-2:#2575fc;
+        }
         .video-wrapper {
             position: relative;
             width: 100%;
@@ -22,6 +29,8 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             background: #000;
             aspect-ratio: 16 / 9;
+            transition: box-shadow .35s ease, transform .35s ease; /* (6) Ambient glow */
+            will-change: transform;
         }
         .video-wrapper iframe {
           position: absolute;
@@ -47,14 +56,28 @@
             padding: 0;
             background-color: #f4f4f9;
             color: #333;
+            scroll-behavior: smooth; /* smooth scroll fallback */
         }
         header {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
+            background: linear-gradient(to right, var(--grad-1), var(--grad-2));
             color: white;
             padding: 20px 40px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        /* (7) Başlık shimmer */
+        header h1{
+          display:inline-block;
+          background: linear-gradient(90deg,#fff,#e6f0ff,#fff);
+          -webkit-background-clip:text; background-clip:text; color:transparent;
+          background-size: 200% 100%;
+          animation: titleShimmer 6s linear infinite;
+        }
+        @keyframes titleShimmer{
+          0%{ background-position: 200% 0; }
+          100%{ background-position: -200% 0; }
+        }
+
         nav {
             display: flex;
             justify-content: center;
@@ -67,17 +90,35 @@
             z-index: 1000;
         }
         nav a {
-            color: #6a11cb;
+            color: var(--grad-1);
             text-decoration: none;
             font-weight: bold;
             padding: 10px 20px;
             transition: all 0.3s ease;
+            position: relative; /* (2) underline hazırlık */
+            overflow: hidden;
         }
         nav a:hover {
-            background: #6a11cb;
+            background: var(--grad-1);
             color: white;
             border-radius: 5px;
         }
+        /* (2) underline kaydırma + aktif link */
+        nav a::after{
+          content:"";
+          position:absolute;
+          left:0; bottom:6px;
+          width:100%; height:2px;
+          background: currentColor;
+          transform: translateX(-100%);
+          transition: transform .3s ease;
+        }
+        nav a:hover::after { transform: translateX(0); }
+        nav a.active {
+          color: var(--grad-2);
+        }
+        nav a.active::after { transform: translateX(0); }
+
         section {
             padding: 40px 20px;
             max-width: 1200px;
@@ -125,11 +166,19 @@
             -webkit-mask-composite: xor;
                     mask-composite: exclude;
             pointer-events: none;
+            animation: borderGlow 4s ease-in-out infinite; /* (3) border shimmer */
+        }
+        @keyframes borderGlow {
+          0%,100% { opacity:.6; }
+          50% { opacity:1; }
         }
         .intro.premium img {
             border: 4px solid rgba(0,0,0,0.05);
             box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+            transition: transform .5s ease; /* (3) micro-parallax */
+            will-change: transform;
         }
+        .intro.premium:hover img { transform: translateY(-4px) scale(1.02); }
         .intro.premium h2 {
             margin-top: 4px;
             margin-bottom: 10px;
@@ -160,6 +209,20 @@
             color: #1f2937;
             letter-spacing: .01em;
         }
+
+        /* (8) CSS-only typing efekti */
+        .typing{
+          width: 27ch; /* metin uzunluğuna göre ayarla */
+          white-space: nowrap;
+          overflow: hidden;
+          border-right: 2px solid rgba(0,0,0,.4);
+          margin: 8px auto 0;
+          animation: type 3.6s steps(27) 1 both, blink .9s step-end infinite;
+          font-weight: 700;
+          letter-spacing: .01em;
+        }
+        @keyframes type { from { width: 0; } }
+        @keyframes blink { 50% { border-color: transparent; } }
 
         /* ---------- GALLERY (ORİJİNAL) ---------- */
         .gallery {
@@ -201,9 +264,11 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             border: 1px solid rgba(0,0,0,0.06);
             transition: transform .25s ease, box-shadow .25s ease;
+            transform-style: preserve-3d; /* (4) tilt */
+            will-change: transform;
         }
         .project-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) rotateX(0.6deg) rotateY(-0.6deg);
             box-shadow: 0 10px 20px rgba(0,0,0,0.12);
         }
         .project-title {
@@ -225,7 +290,10 @@
             border-radius: 8px;
             background: #eee;
             cursor: zoom-in; /* tıklanabilir görsel ipucu */
+            transition: transform .25s ease;
+            will-change: transform;
         }
+        .project-images img:hover { transform: scale(1.02); }
         .project-bullets {
             margin: 0;
             padding-left: 18px; /* maddeleme girintisi */
@@ -261,11 +329,12 @@
             transform: translateY(-1px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.06);
         }
+        .project-links a:active { transform: translateY(0) scale(.98); } /* (4) micro-interaction */
 
         footer {
             text-align: center;
             padding: 20px;
-            background: #6a11cb;
+            background: var(--grad-1);
             color: white;
             margin-top: 40px;
         }
@@ -305,14 +374,21 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
+            opacity: 0; /* (5) fade */
+            transition: opacity .25s ease;
         }
-        .lightbox.open { display: flex; }
+        .lightbox.open { display: flex; opacity: 1; }
         .lightbox__img {
             max-width: 90vw;
             max-height: 90vh;
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            transform: scale(.96); /* (5) zoom */
+            transition: transform .25s ease, opacity .25s ease;
+            opacity:0;
         }
+        .lightbox.open .lightbox__img { transform: none; opacity:1; }
+
         .lightbox__close,
         .lightbox__prev,
         .lightbox__next {
@@ -355,12 +431,44 @@
         @media (max-width: 768px) {
             .lightbox__prev, .lightbox__next { top: auto; bottom: 24px; transform: none; }
         }
+
+        /* ---------- (1) Scroll-reveal ---------- */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.in { opacity: 1; transform: none; }
+        .reveal-stagger > * { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal-stagger.in > * { opacity: 1; transform: none; }
+        .reveal-stagger.in > *:nth-child(1){ transition-delay:.05s }
+        .reveal-stagger.in > *:nth-child(2){ transition-delay:.12s }
+        .reveal-stagger.in > *:nth-child(3){ transition-delay:.18s }
+        .reveal-stagger.in > *:nth-child(4){ transition-delay:.24s }
+
+        /* ---------- (6) Video ambient glow hover ---------- */
+        .video-wrapper:hover { 
+          box-shadow: 0 14px 32px rgba(37,117,252,.35), 0 0 0 1px rgba(106,17,203,.12) inset;
+          transform: translateY(-2px);
+        }
+
+        /* ---------- Erişilebilirlik / Performans ---------- */
+        @media (prefers-reduced-motion: reduce) {
+          .reveal, .reveal-stagger > *,
+          .lightbox, .lightbox__img,
+          .project-card, .project-images img,
+          header h1, .typing, .video-wrapper,
+          .intro.premium::before, .intro.premium img {
+            transition: none !important;
+            animation: none !important;
+            transform: none !important;
+          }
+          .reveal, .reveal-stagger > * { opacity: 1 !important; }
+        }
+        @media (hover:none) { .project-card:hover { transform: none; } } /* mobilde tilt kapat */
     </style>
 </head>
 <body>
     <header>
         <h1>Harun Harman</h1>
     </header>
+
     <nav>
         <a href="#intro">About Me</a>
         <a href="#projects">Projects</a>
@@ -369,9 +477,13 @@
     </nav>
 
     <!-- SADECE BU BLOK PREMIUM KUTUYA DÖNÜŞTÜRÜLDÜ -->
-    <section id="intro" class="intro premium">
+    <section id="intro" class="intro premium reveal">
         <img src="images/pfpp.jpg" alt="Harun's Photo">
         <h2>About Me</h2>
+
+        <!-- (8) Typing efekti satırı -->
+        <p class="typing">AI Engineer • CV/ML • RAG • MLOps</p>
+
         <p>Hello, I’m Harun — an AI Engineer passionate about building intelligent systems that create real-world impact. I recently graduated from Hacettepe University’s Artificial Intelligence Engineering program, and I enjoy combining curiosity, discipline, and creativity to develop data-driven solutions.</p>
 
         <p>So far, I’ve gained hands-on experience in <strong>machine learning, computer vision, and data engineering</strong> through two internships and two part-time roles. I contributed to projects such as <strong>UAV visual navigation, multi-sensor pipelines, anomaly detection, data validation, and image classification</strong> at companies including HAVELSAN, TIGA Healthcare, Mastersoft, and Konumsal Information Systems. These experiences taught me how to take responsibility, collaborate effectively, and deliver results as part of a team.</p>
@@ -399,9 +511,9 @@
     </section>
 
     <!-- YENİ: PROJECTS (2x2) -->
-    <section id="projects">
+    <section id="projects" class="reveal">
         <h2>Projects</h2>
-        <div class="projects-grid animate__animated animate__fadeInUp">
+        <div class="projects-grid animate__animated animate__fadeInUp reveal-stagger">
 
             <!-- Proje 1 (sol üst) -->
             <article class="project-card">
@@ -439,7 +551,7 @@
             <!-- Proje 2 (sağ üst) -->
             <article class="project-card">
                 <div class="project-images">
-                    <img src="images/teknofest.png" data-full="images/projects/proje2-a.jpg" alt="Teknofest Frame A">
+                    <img src="images/teknofest.png" data-full="images/teknofest.png" alt="Teknofest Frame A">
                 </div>
                 <h3 class="project-title">Teknofest: AI in Transportation</h3>
                 <ul class="project-bullets">
@@ -493,9 +605,9 @@ income, how long they have been living in Istanbul, their sport activities etc.<
         </div>
     </section>
 
-    <section id="gallery">
+    <section id="gallery" class="reveal">
         <h2>Gallery</h2>
-        <div class="gallery">
+        <div class="gallery reveal-stagger">
             <div class="gallery-item"> 
                 <img src="images/kayak.jpg" alt="Sport Activity">
                 <p><strong>Date:</strong> March 2024<br><strong>Details:</strong> Snowboard memories from Erciyes, Türkiye.</p>
@@ -507,7 +619,7 @@ income, how long they have been living in Istanbul, their sport activities etc.<
         </div>
     </section>
 
-    <section id="contact" class="contact">
+    <section id="contact" class="contact reveal">
         <h2>Contact</h2>
         <p>Email me at: <a href="mailto:harunharmann@gmail.com">harunharmann@gmail.com</a></p>
     </section>
@@ -526,6 +638,7 @@ income, how long they have been living in Istanbul, their sport activities etc.<
     </div>
 
     <script>
+    /* ----------------- LIGHTBOX + mevcut kod (geliştirilmiş) ----------------- */
     (function() {
         const lb = document.getElementById('lightbox');
         const lbImg = document.getElementById('lbImg');
@@ -565,7 +678,7 @@ income, how long they have been living in Istanbul, their sport activities etc.<
             lbImg.src = item.full || item.src;
             lbImg.alt = item.alt || '';
             lbCaption.textContent = item.alt || '';
-            // Buton görünürlüğü (2 görselse yine gösteriyoruz)
+            // Buton görünürlüğü
             btnPrev.style.display = currentGroup.length > 1 ? 'grid' : 'none';
             btnNext.style.display = currentGroup.length > 1 ? 'grid' : 'none';
         }
@@ -619,10 +732,44 @@ income, how long they have been living in Istanbul, their sport activities etc.<
         }, { passive: true });
     })();
     </script>
+
+    <!-- ----------------- (1) Scroll-reveal + (2) Active nav + smooth-click ----------------- -->
+    <script>
+      (function(){
+        /* Scroll-reveal */
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: .12 });
+
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+
+        /* Aktif link vurgusu (scroll spy) */
+        const sections = [...document.querySelectorAll('section[id]')];
+        const links = [...document.querySelectorAll('nav a[href^="#"]')];
+
+        const spy = ()=>{
+          const y = window.scrollY + 120; // sticky nav payı
+          let current = sections[0]?.id;
+          for (const s of sections) if (y >= s.offsetTop) current = s.id;
+          links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+current));
+        };
+        spy();
+        window.addEventListener('scroll', spy, { passive: true });
+
+        /* Smooth scroll (tarayıcı desteklemiyorsa) */
+        links.forEach(a => a.addEventListener('click', e=>{
+          const id = a.getAttribute('href');
+          const el = document.querySelector(id);
+          if (!el) return;
+          e.preventDefault();
+          el.scrollIntoView({ behavior:'smooth', block:'start' });
+        }));
+      })();
+    </script>
 </body>
 </html>
-
-
-
-
-
